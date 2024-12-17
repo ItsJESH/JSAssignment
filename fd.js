@@ -1,13 +1,21 @@
-document.getElementById('feedback').textContent = "Feed Back Form"
 
-function show(){
-    let name = document.getElementById('name').value
-    let age = document.getElementById('age').value
-    let email = document.getElementById('email').value
-    let div = document.getElementById('div').value
-    let fb = document.getElementById('fd').value
-    let rate = document.getElementById('rate').value
+function submitFeedback() {
+    const name = document.getElementById("name").value;
+    const email = document.getElementById("email").value;
+    const division = document.getElementById("division").value;
+    const feedback = document.getElementById("feedback").value;
 
-    console.log(`name: ${name},\nDiv: ${div} \nage: ${age},\n email: ${email}\n Feedback: ${fb}\n Rate US: ${rate}`)
-    document.getElementById('content').innerHTML = "Thank you for Giving your feedback"
-}
+    if (name && email && division && feedback) {
+      console.log("Feedback Submitted:");
+      console.log("Name:", name);
+      console.log("Email:", email);
+      console.log("Division:", division);
+      console.log("Feedback:", feedback);
+
+      document.getElementById("feedbackForm").reset();
+
+      alert(`Thanks for the feedback ${name}`);
+    } else {
+      alert("Please fill all the fields before submitting.");
+    }
+  }
