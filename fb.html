@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1 id="feedback"></h1>
+
+    Name:<input id="name" type="text" required>
+    <br>
+    Age:<input id="age" type="number" required>
+    <br>
+    Division : <input id="div" type="text"  required>
+    <br>
+    Email : <input type="text" id="email" required>
+    <br>
+    Your FeedBack : <input type="text" id="fd" required>
+    <br>
+    Rate US : <select name="select" id="rate">
+        <option value="1: Very Good">Very Good</option>
+        <option value="2: Good">Good</option>
+        <option value="3: Mid">Mid</option>
+        <option value="4: poor">poor</option>
+        <option value="5: Wrost">Wrost</option>
+    </select>
+    <br>
+    <button id="button" onclick="show()">Submit</button>
+
+    <p id="content"></p>
+
+
+    <script src="./fd.js"></script>
+</body>
+</html>
