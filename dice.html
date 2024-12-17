@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>=Dice Game</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            background: linear-gradient(135deg, #000 50%, #555 100%);
+            color: #fff;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: #00d2be;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.7);
+            margin-top: 20px;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        .player-info {
+            font-size: 1.5rem;
+            margin: 15px;
+        }
+
+        .dice {
+            font-size: 6rem;
+            margin: 20px;
+            color: #e3e3e3;
+        }
+
+        .buttons {
+            margin-top: 30px;
+        }
+
+        button {
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            margin: 10px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: #00d2be;
+            color: #000;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+            transition: transform 0.2s ease-in-out;
+        }
+
+        button:hover {
+            transform: scale(1.1);
+        }
+
+        button:disabled {
+            background-color: #555;
+            color: #999;
+            cursor: not-allowed;
+        }
+
+        .reset {
+            background-color: #e3e3e3;
+            color: #000;
+        }
+
+        .winner {
+            font-size: 2rem;
+            color: #00ff85;
+            margin-top: 20px;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.7);
+        }
+
+        footer {
+            position: absolute;
+            bottom: 10px;
+            width: 100%;
+            text-align: center;
+            font-size: 1rem;
+            color: #ccc;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Dice Game</h1>
+        <div id="player1" class="player-info">Player 1 Score: <span id="score1">0</span></div>
+        <div id="player2" class="player-info">Player 2 Score: <span id="score2">0</span></div>
+        <div class="dice" id="dice"></div>
+        <div class="buttons">
+            <button id="roll1">Player 1 </button>
+            <button id="roll2" disabled>Player 2</button>
+            <button id="reset" class="reset">Reset</button>
+        </div>
+        <div class="winner" id="winner"></div>
+    </div>
+    <script src="./dice.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Geometry Calculator</title>
+    <style>
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #00d2be, #555555);
+            color: #f2f2f2;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background: #101820;
+            color: #00d2be;
+            padding: 20px;
+            text-align: center;
+            font-size: 28px;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            padding: 20px;
+            margin: 20px;
+        }
+
+        .section {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid #00d2be;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 680px;
+        }
+
+        .section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 16px rgba(0, 210, 190, 0.5);
+        }
+
+        .image {
+            height: 200px;
+            width: auto;
+            margin-bottom: 15px;
+        }
+
+        h2 {
+            color: #000000;
+            margin-bottom: 15px;
+        }
+
+        input {
+            padding: 10px;
+            margin: 8px 0;
+            border: 2px solid #555;
+            border-radius: 5px;
+            font-size: 16px;
+            width: 80%;
+            outline: none;
+            background: #333;
+            color: #f2f2f2;
+        }
+
+        input:focus {
+            border-color: #00d2be;
+        }
+
+        button {
+            background: #00d2be;
+            color: #101820;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        button:hover {
+            background: #2aac9f;
+            color: #000000;
+        }
+
+        .formula {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #1c1c1c;
+            font-style: italic;
+        }
+
+        .result {
+            margin-top: 10px;
+            font-weight: bold;
+            color: #000000;
+        }
+
+        footer {
+            background: #101820;
+            color: #f2f2f2;
+            padding: 10px;
+            text-align: center;
+            margin-top: auto;
+        }
+
+        footer a {
+            color: #00d2be;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+    </style>
+</head>
+<body>
+
+<header>
+    Geometry Calculator
+</header>
+
+<div class="container">
+    <!-- Cube Section -->
+    <div class="section">
+        <img class="image" src="./media/cube.png">
+        <h2>Cube</h2>
+        <input type="number" id="cubeSide" placeholder="Side Length" />
+        <button onclick="calculateCube()">Calculate</button>
+        <div class="formula">Formula: Volume = <span id="cubeVolumeFormula"></span>, Surface Area = <span id="cubeSurfaceAreaFormula"></span></div>
+        <div class="result" id="cubeResult"></div>
+    </div>
+
+    <!-- Sphere Section -->
+    <div class="section">
+        <img class="image" src="./media/sphere.png" alt="">
+        <h2>Sphere</h2>
+        <input type="number" id="sphereRadius" placeholder="Radius" />
+        <button onclick="calculateSphere()">Calculate</button>
+        <div class="formula">Formula: Volume = <span id="sphereVolumeFormula"></span>, Surface Area = <span id="sphereSurfaceAreaFormula"></span></div>
+        <div class="result" id="sphereResult"></div>
+    </div>
+
+    <!-- Cylinder Section -->
+    <div class="section">
+        <img class="image" src="./media/cylinder.png" alt="">
+        <h2>Cylinder</h2>
+        <input type="number" id="cylinderRadius" placeholder="Radius" />
+        <input type="number" id="cylinderHeight" placeholder="Height" />
+        <button onclick="calculateCylinder()">Calculate</button>
+        <div class="formula">Formula: Volume = <span id="cylinderVolumeFormula"></span>, Surface Area = <span id="cylinderSurfaceAreaFormula"></span></div>
+        <div class="result" id="cylinderResult"></div>
+    </div>
+
+    <!-- Cone Section -->
+    <div class="section">
+        <img class="image" src="./media/cone.png" alt="">
+        <h2>Cone</h2>
+        <input type="number" id="coneRadius" placeholder="Radius" />
+        <input type="number" id="coneHeight" placeholder="Height" />
+        <button onclick="calculateCone()">Calculate</button>
+        <div class="formula">Formula: Volume = <span id="coneVolumeFormula"></span>, Surface Area = <span id="coneSurfaceAreaFormula"></span></div>
+        <div class="result" id="coneResult"></div>
+    </div>
+
+    <!-- Rectangular Prism Section -->
+    <div class="section">
+        <img class="image" src="./media/rectangular-prism.png" alt="">
+        <h2>Rectangular Prism</h2>
+        <input type="number" id="rectPrismLength" placeholder="Length" />
+        <input type="number" id="rectPrismWidth" placeholder="Width" />
+        <input type="number" id="rectPrismHeight" placeholder="Height" />
+        <button onclick="calculateRectPrism()">Calculate</button>
+        <div class="formula">Formula: Volume = <span id="rectPrismVolumeFormula"></span>, Surface Area = <span id="rectPrismSurfaceAreaFormula"></span></div>
+        <div class="result" id="rectPrismResult"></div>
+    </div>
+
+    <!-- Pyramid Section -->
+    <div class="section">
+        <img class="image" src="./media/pyramid.png" alt="">
+        <h2>Pyramid</h2>
+        <input type="number" id="pyramidBase" placeholder="Base Length" />
+        <input type="number" id="pyramidHeight" placeholder="Height" />
+        <button onclick="calculatePyramid()">Calculate</button>
+        <div class="formula">Formula: Volume = <span id="pyramidVolumeFormula"></span>, Surface Area = <span id="pyramidSurfaceAreaFormula"></span></div>
+        <div class="result" id="pyramidResult"></div>
+    </div>
+
+    <!-- Tetrahedron Section -->
+    <div class="section">
+        <img class="image" src="./media/tetrahedron.png" alt="">
+        <h2>Tetrahedron</h2>
+        <input type="number" id="tetrahedronEdge" placeholder="Edge Length" />
+        <button onclick="calculateTetrahedron()">Calculate</button>
+        <div class="formula">Formula: Volume = <span id="tetrahedronVolumeFormula"></span></div>
+        <div class="result" id="tetrahedronResult"></div>
+    </div>
+
+    <!-- Hemisphere Section -->
+    <div class="section">
+        <img class="image" src="./media/hemisphere.png" alt="">
+        <h2>Hemisphere</h2>
+        <input type="number" id="hemisphereRadius" placeholder="Radius" />
+        <button onclick="calculateHemisphere()">Calculate</button>
+        <div class="formula">Formula: Volume = <span id="hemisphereVolumeFormula"></span>, Surface Area = <span id="hemisphereSurfaceAreaFormula"></span></div>
+        <div class="result" id="hemisphereResult"></div>
+    </div>
+
+    <!-- Torus Section -->
+    <div class="section">
+        <img class="image" src="./media/torus.png" alt="">
+        <h2>Torus</h2>
+        <input type="number" id="torusRadius" placeholder="Radius" />
+        <input type="number" id="torusTubeRadius" placeholder="Tube Radius" />
+        <button onclick="calculateTorus()">Calculate</button>
+        <div class="formula">Formula: Volume = <span id="torusVolumeFormula"></span>, Surface Area = <span id="torusSurfaceAreaFormula"></span></div>
+        <div class="result" id="torusResult"></div>
+    </div>
+</div>
+
+<script src="./calc.js">
+</script>
+
+</body>
+</html>
