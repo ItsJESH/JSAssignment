@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mercedes F1 Themed Multi-Property Converter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: #e0e0e0;
+            text-align: center;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #00d2be;
+            margin-bottom: 20px;
+        }
+
+        .converter-container {
+            display: inline-block;
+            padding: 30px;
+            min-width: 29rem;
+            border-radius: 10px;
+            background: linear-gradient(145deg, #1a1a1a, #2a2a2a);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .input-group,
+        .dropdown-group,
+        .radio-buttons {
+            margin: 20px 0;
+        }
+
+        .dropdown-group select {
+            padding: 10px;
+            font-size: 16px;
+            border: 2px solid #00d2be;
+            border-radius: 5px;
+            background-color: #1a1a1a;
+            color: #e0e0e0;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .input-group input {
+            width: 120px;
+            padding: 10px;
+            font-size: 18px;
+            border: 2px solid #00d2be;
+            border-radius: 5px;
+            background-color: #1a1a1a;
+            color: #e0e0e0;
+            text-align: center;
+        }
+
+        .input-group input::placeholder {
+            color: #7a7a7a;
+        }
+
+        .radio-buttons label {
+            padding: 10px 25px;
+            font-size: 16px;
+            border: 2px solid #555;
+            border-radius: 20px;
+            background-color: #1a1a1a;
+            color: #e0e0e0;
+            cursor: pointer;
+            margin: 0 10px;
+            transition: all 0.3s ease;
+        }
+
+        .radio-buttons input[type="radio"] {
+            display: none;
+        }
+
+        .radio-buttons input[type="radio"]:checked+label {
+            background-color: #00d2be;
+            color: #121212;
+            border: 2px solid #00d2be;
+            box-shadow: 0 0 10px #00d2be;
+        }
+
+        .input-group input[readonly] {
+            cursor: not-allowed;
+            background-color: #2a2a2a;
+        }
+
+        .flex {
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+        }
+
+        .namebox {
+            justify-content: space-around;
+            color: #00d2be;
+        }
+    </style>
+    <script src="https://kit.fontawesome.com/c4cb78a369.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <h1>Converter</h1>
+    <div class="converter-container">
+        <!-- Dropdown for Property Selection -->
+        <div class="dropdown-group">
+            <select id="property">
+                <option value="temperature">Temperature</option>
+                <option value="mass">Mass</option>
+                <option value="length">Length</option>
+                <option value="speed">Speed</option>
+                <option value="volume">Volume</option>
+            </select>
+        </div>
+
+        <!-- Radio Buttons for Conversion Options -->
+        <div class="radio-buttons">
+            <input type="radio" id="option1" name="conversion" value="option1" checked>
+            <label for="option1">Celsius to Fahrenheit</label>
+
+            <input type="radio" id="option2" name="conversion" value="option2">
+            <label for="option2">Fahrenheit to Celsius</label>
+        </div>
+        <div class="flex">
+            <div class="input-group">
+                <input type="number" id="inputValue" placeholder="Enter value">
+            </div>
+            <i class="fa-solid fa-arrow-right"></i>
+            <div class="input-group">
+                <input type="text" id="outputValue" readonly placeholder="Result">
+            </div>
+        </div>
+        <div class="flex namebox">
+            <h3 id="inname">
+                Celsius
+            </h3>
+            <h3 id="outname">
+                Fahrenheit
+            </h3>
+
+        </div>
+    </div>
+<script src="./conv.js"></script>
+</body>
+
+</html>
