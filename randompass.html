@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Password Generator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #101820, #00d2be);
+            font-family: 'Arial', sans-serif;
+            color: #ffffff;
+        }
+
+        .maincon {
+            background: #1c1e22;
+            border: 3px solid #00d2be;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+            max-width: 90%;
+        }
+
+        .header h1 {
+            color: #00d2be;
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .output {
+            background: #282c34;
+            border: 2px solid #00d2be;
+            border-radius: 8px;
+            color: #ffffff;
+            padding: 10px;
+            font-size: 1.2rem;
+            scroll-margin-bottom: 30px;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        .checkb {
+            margin: 20px 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .checkb input[type="checkbox"] {
+            display: none;
+        }
+
+        .checkb label {
+            background: #1c1e22;
+            color: #ffffff;
+            border: 2px solid #00d2be;
+            padding: 10px 15px;
+            margin: 5px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .checkb input[type="checkbox"]:checked + label {
+            background: #00d2be;
+            color: #1c1e22;
+        }
+
+        .len input {
+            width: 50%;
+            padding: 10px;
+            border: 2px solid #00d2be;
+            border-radius: 8px;
+            background: #1c1e22;
+            color: #ffffff;
+            text-align: center;
+            font-size: 1rem;
+            margin-bottom: 20px;
+        }
+
+        .len input[type="number"]::-webkit-inner-spin-button,
+        .len input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+        }
+
+        button {
+            background: #00d2be;
+            color: #1c1e22;
+            padding: 12px 20px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background: #1c1e22;
+            color: #00d2be;
+            border: 2px solid #00d2be;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="maincon">
+        <header class="header">
+            <h1>Random Password Generator</h1>
+        </header>
+        <div class="output">
+            <code id="output">Your Password Will Appear Here</code>
+        </div>
+
+        <div class="checkb">
+            <input type="checkbox" id="uc">
+            <label for="uc">Uppercase</label>
+            <input type="checkbox" id="lc">
+            <label for="lc">Lowercase</label>
+            <input type="checkbox" id="dg">
+            <label for="dg">Digits</label>
+            <input type="checkbox" id="sc">
+            <label for="sc">Special Characters</label>
+        </div>
+
+        <div class="len">
+            <input type="number" id="len" placeholder="Length (12-20)" min="12" max="20" value="12">
+        </div>
+        <button id="gen">Generate Password</button>
+    </div>
+
+    <script>
+        const output = document.getElementById("output");
+        const uc = document.getElementById("uc");
+        const lc = document.getElementById("lc");
+        const dg = document.getElementById("dg");
+        const sc = document.getElementById("sc");
+        const len = document.getElementById("len");
+        const genBtn = document.getElementById("gen");
+
+        genBtn.addEventListener("click", () => {
+            const length = parseInt(len.value);
+            if (length < 12 || length > 20) {
+                output.textContent = "Length must be between 12 and 20.";
+                return;
+            }
+
+            let charSet = "";
+            if (uc.checked) charSet += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            if (lc.checked) charSet += "abcdefghijklmnopqrstuvwxyz";
+            if (dg.checked) charSet += "0123456789";
+            if (sc.checked) charSet += "!@#$%^&*()_+[]{}|;:',.<>?";
+
+            if (charSet === "") {
+                output.textContent = "Please select at least one option.";
+                return;
+            }
+
+            let password = "";
+            for (let i = 0; i < length; i++) {
+                const randIndex = Math.floor(Math.random() * charSet.length);
+                password += charSet[randIndex];
+            }
+
+            output.textContent = password;
+        });
+    </script>
+</body>
+
+</html>
