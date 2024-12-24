@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Classifier</title>
+    <style>
+        /* General Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #1a1a1a;
+            color: #ffffff;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: #2d2d2d;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            text-align: center;
+            color: #3498db;
+            margin-bottom: 2rem;
+        }
+
+        /* Status Styles */
+        .status {
+            text-align: center;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            background-color: #363636;
+            border-radius: 5px;
+            color: #ffffff;
+        }
+
+        /* Upload Section */
+        .upload-section {
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .upload-button {
+            display: block;
+            padding: 2rem;
+            margin: 1rem auto;
+            border: 2px dashed #3498db;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background-color: #363636;
+            color: #ffffff;
+        }
+
+        .upload-button:hover {
+            background-color: #404040;
+            border-color: #2980b9;
+        }
+
+        .info {
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        /* Preview Section */
+        .preview-section {
+            margin-top: 2rem;
+        }
+
+        .image-container {
+            max-width: 400px;
+            margin: 1rem auto;
+        }
+
+        #preview-image {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Results Section */
+        .results-container {
+            margin-top: 2rem;
+            padding: 1rem;
+            background-color: #363636;
+            border-radius: 5px;
+        }
+
+        .predictions {
+            margin-top: 1rem;
+        }
+
+        .prediction-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem;
+            margin: 0.5rem 0;
+            background-color: #404040;
+            border-radius: 5px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        }
+
+        .confidence-bar {
+            height: 20px;
+            background-color: #3498db;
+            border-radius: 10px;
+            transition: width 0.3s ease;
+        }
+
+        /* Loading Spinner */
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #363636;
+            border-top: 5px solid #3498db;
+            border-radius: 50%;
+            margin: 1rem auto;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Reset Button */
+        .reset-button {
+            display: block;
+            margin: 2rem auto;
+            padding: 0.8rem 1.5rem;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .reset-button:hover {
+            background-color: #2980b9;
+        }
+
+        /* Success and Error States */
+        .success {
+            background-color: #2ecc71;
+            color: #fff;
+        }
+
+        .error {
+            color: #e74c3c;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            .container {
+                margin: 1rem;
+                padding: 1rem;
+            }
+
+            .upload-button {
+                padding: 1rem;
+            }
+        }
+    </style>
+    <!-- ML5.js Library -->
+    <script src="https://unpkg.com/ml5@latest/dist/ml5.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Image Classifier</h1>
+
+        <!-- Model Loading Status -->
+        <div id="model-status" class="status">
+            Loading model...
+        </div>
+
+        <!-- Upload Section -->
+        <div class="upload-section">
+            <input type="file" id="image-input" accept="image/*" class="hidden">
+            <label for="image-input" class="upload-button">
+                Choose Image or Drop Here
+            </label>
+            <p class="info">Supported formats: JPG, PNG</p>
+        </div>
+
+        <!-- Preview Section -->
+        <div class="preview-section hidden">
+            <h2>Preview</h2>
+            <div class="image-container">
+                <img id="preview-image" alt="Preview">
+            </div>
+
+            <!-- Loading Spinner -->
+            <div id="loading-spinner" class="spinner hidden"></div>
+
+            <!-- Results Section -->
+            <div id="results" class="results-container">
+                <h2>Classification Results</h2>
+                <div id="predictions" class="predictions">
+                    <!-- Predictions will be inserted here -->
+                </div>
+            </div>
+
+            <!-- Reset Button -->
+            <button id="reset-button" class="reset-button">
+                Try Another Image
+            </button>
+        </div>
+    </div>
+
+    <script src="./IC.js"></script>
+</body>
+
+</html>
