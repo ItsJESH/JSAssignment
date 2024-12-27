@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Attendance System</title>
+    <style>
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Arial", sans-serif;
+            background-color: #101820; /* Black theme base */
+            color: #00d2be; /* Mercedes green */
+            line-height: 1.6;
+            text-align: center;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #00d2be; /* Mercedes green */
+            margin-bottom: 20px;
+            font-size: 2.5rem;
+            text-transform: uppercase;
+        }
+
+        #webcam-container {
+            margin: 20px auto;
+            border: 5px solid #00d2be; /* Mercedes green border */
+            border-radius: 15px;
+            width: 350px;
+            height: 350px;
+            background: #d9d9d9; /* Light silver background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #label-container {
+            margin: 20px auto;
+            padding: 10px;
+            background: #2c2f33; /* Dark silver background */
+            border-radius: 10px;
+            width: 300px;
+            color: #ffffff;
+            font-size: 1rem;
+        }
+
+        #result-container {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 10px;
+            font-size: 1.5rem;
+            text-transform: uppercase;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 1rem;
+            margin-top: 10px;
+            background-color: #00d2be;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-transform: uppercase;
+        }
+
+        button:hover {
+            background-color: #008f85; /* Darker green on hover */
+        }
+
+        .result-success {
+            color: #00d2be;
+            background-color: #1c1c1c; /* Dark background for success */
+            border: 2px solid #00d2be;
+        }
+
+        .result-error {
+            color: #ff4c4c; /* Red for error */
+            background-color: #1c1c1c;
+            border: 2px solid #ff4c4c;
+        }
+
+        img {
+            margin-top: 10px;
+            max-width: 120px;
+            border-radius: 10px;
+            border: 3px solid #00d2be;
+        }
+    </style>
+</head>
+<body>
+    <h1>AI Attendance System</h1>
+    <button type="button" onclick="init()">Start Camera</button>
+    <div id="webcam-container"></div>
+    <div id="label-container"></div>
+    <div id="result-container"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
+    <script>
+        const URL = "https://teachablemachine.withgoogle.com/models/ZWTufafvj/";
+
+        let model, webcam, labelContainer, maxPredictions;
+        let isProcessing = false;
+
+        async function init() {
+            const modelURL = URL + "model.json";
+            const metadataURL = URL + "metadata.json";
+
+            model = await tmImage.load(modelURL, metadataURL);
+            maxPredictions = model.getTotalClasses();
+
+            const flip = true;
+            webcam = new tmImage.Webcam(350, 350, flip); // Increased camera size
+            await webcam.setup();
+            await webcam.play();
+            window.requestAnimationFrame(loop);
+
+            document.getElementById("webcam-container").appendChild(webcam.canvas);
+
+            labelContainer = document.getElementById("label-container");
+            for (let i = 0; i < maxPredictions; i++) {
+                labelContainer.appendChild(document.createElement("div"));
+            }
+        }
+
+        async function loop() {
+            if (!isProcessing) {
+                webcam.update();
+                await predict();
+            }
+            window.requestAnimationFrame(loop);
+        }
+
+        async function predict() {
+            const prediction = await model.predict(webcam.canvas);
+            let resultContainer = document.getElementById("result-container");
+            let foundMatch = false;
+
+            for (let i = 0; i < maxPredictions; i++) {
+                const className = prediction[i].className;
+                const probability = prediction[i].probability.toFixed(2);
+
+                labelContainer.childNodes[i].innerHTML = `${className}: ${(probability * 100).toFixed(2)}%`;
+
+                if (probability > 0.9 && !isProcessing) {
+                    foundMatch = true;
+                    isProcessing = true;
+
+                    resultContainer.innerHTML = `
+                        <div class="result-success" style="padding: 20px;">
+                            Welcome, <b>${className}</b>!
+                            </div>
+                    `;
+
+                    setTimeout(() => {
+                        resultContainer.innerHTML = "";
+                        isProcessing = false;
+                    }, 5000);
+                    break;
+                }
+            }
+
+            if (!foundMatch && !isProcessing) {
+                resultContainer.innerHTML = `
+                    <div class="result-error" style="padding: 20px;">
+                        Person Not Found!
+                    </div>
+                `;
+
+                setTimeout(() => {
+                    resultContainer.innerHTML = "";
+                    isProcessing = false;
+                }, 10000);
+            }
+        }
+    </script>
+</body>
+</html>
